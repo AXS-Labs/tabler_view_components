@@ -27,11 +27,21 @@ module Demo
     gem_components_path = Rails.root.join("../app/view_components")
     config.autoload_paths << gem_components_path
     config.eager_load_paths << gem_components_path
-    #
+
+    previews_path = Rails.root.join("../previews")
+    config.autoload_paths << previews_path
+    config.eager_load_paths << previews_path
+
     # Initialize configuration defaults for originally generated Rails version.
-    config.view_component.previews.default_layout = "component_preview"
-    config.view_component.previews.enabled = true
+    # config.view_component.previews.default_layout = "component_preview"
+    # config.view_component.previews.enabled = true
     # config.view_component.previews.controller = "PreviewController"
-    config.view_component.previews.paths << Rails.root.join("..", "previews")
+    # config.view_component.previews.paths << Rails.root.join("..", "previews")
+
+    config.lookbook.page_paths = [Rails.root.join("..", "previews", "pages")]
+    config.lookbook.component_paths = [Rails.root.join("..", "app", "components")]
+    config.lookbook.preview_paths = [Rails.root.join("..", "previews")]
+    config.lookbook.preview_paths = [Rails.root.join("..", "previews")]
+    config.lookbook.preview_layout = "component_preview"
   end
 end

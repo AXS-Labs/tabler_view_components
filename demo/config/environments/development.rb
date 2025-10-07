@@ -66,17 +66,4 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
-
-  # Watch ViewComponent files in the gem for changes and reload
-  gem_components_path = Rails.root.join("../app/view_components")
-  gem_previews_path = Rails.root.join("../previews")
-
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-
-  # Add gem component and preview paths to watchable files
-  config.watchable_files.concat Dir[gem_components_path.join("**/*.{rb,erb}")]
-  config.watchable_files.concat Dir[gem_previews_path.join("**/*.rb")] if gem_previews_path.exist?
-
-  config.watchable_dirs[gem_components_path.to_s] = [:rb, :erb]
-  config.watchable_dirs[gem_previews_path.to_s] = [:rb] if gem_previews_path.exist?
 end
