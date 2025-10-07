@@ -7,6 +7,6 @@ module Tabler::ViewComponents
 
   # tabler/view_components root directory.
   def self.root
-    Pathname(File.expand_path(File.join("..", ".."), __dir__))
+    Pathname(File.expand_path(File.join(".."), __dir__))
   end
 end
