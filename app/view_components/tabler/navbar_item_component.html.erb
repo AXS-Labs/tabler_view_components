@@ -1,0 +1,5 @@
+<li class="nav-item <%= active? ? 'active' : '' %>">
+  <%= link_to href, class: "nav-link" do %>
+    <span class="nav-link-title"> <%= title.presence || content %></span>
+  <% end %>
+</li>

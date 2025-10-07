@@ -1,0 +1,11 @@
+<header class="navbar navbar-expand-md">
+  <div class="container-xl">
+    <% if items? %>
+      <ul class="navbar-nav">
+        <% items.each do |item| %>
+          <%= item %>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</header>
