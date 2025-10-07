@@ -8,3 +8,4 @@
 **/log/*.log
 storage
 tmp
+.DS_Store
