@@ -1,0 +1,12 @@
+<%= render Tabler::PageComponent.new("Dashboard", subtitle: "Overview") do |page| %>
+  <% page.with_navbar do |navbar| %>
+    <% navbar.with_item("Dashboard", "/dashboard", active: true) %>
+  <% end %>
+
+  <% page.with_secondary_action('New View', url: '#') %>
+  <% page.with_primary_action('Create New Report', url: '#', icon: 'plus') %>
+
+  <div class="page-body">
+    <!-- Page content goes here -->
+  </div>
+<% end %>

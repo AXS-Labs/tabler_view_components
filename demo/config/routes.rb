@@ -15,5 +15,7 @@ Rails.application.routes.draw do
 
   mount Lookbook::Engine, at: "/lookbook"
 
+  get "/dashboard", to: "previews#dashboard"
+
   root to: redirect("/lookbook")
 end
