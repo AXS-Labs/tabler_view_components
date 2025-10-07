@@ -1,8 +1,8 @@
-require_relative "lib/tabler_view_components/version"
+require_relative "lib/tabler/view_components/version"
 
 Gem::Specification.new do |spec|
   spec.name        = "tabler_view_components"
-  spec.version     = TablerViewComponents::VERSION
+  spec.version     = Tabler::ViewComponents::VERSION
   spec.authors     = [ "Alexander Schrot" ]
   spec.email       = [ "alexander@axs-labs.com" ]
   spec.homepage    = "TODO"
