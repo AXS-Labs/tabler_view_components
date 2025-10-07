@@ -19,5 +19,3 @@ gem "rubocop-rails-omakase", require: false
 gem "lookbook", ">= 2.3.13"
 gem "listen"
 gem "actioncable"
-
-gem "reactionview"
