@@ -28,12 +28,19 @@ module Tabler
   #     <% end %>
   #   <% end %>
   class Card::BodyComponent < BaseComponent
+    def initialize(title = nil, **options)
+      @title = title
+      @options = options
+      @class_names = Array(options.delete(:class)).join(" ")
+    end
+
     # Renders the card body wrapper.
     #
     # @return [String] the HTML output for the card body
     def call
-      content_tag(:div, class: "card-body") do
-        content
+      content_tag(:div, class: "card-body #{@class_names}") do
+        concat(content_tag(:div, @title, class: "card-title")) if @title.present?
+        concat(content) if content.present?
       end
     end
   end

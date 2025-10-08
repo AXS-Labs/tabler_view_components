@@ -55,6 +55,7 @@ module Tabler
     renders_one :headline_action, "Tabler::Page::HeadlineButtonComponent"
 
     alias_method :with_primary_button, :with_primary_action
+    alias_method :with_secondary_button, :with_secondary_action
 
     # Creates a new page header component.
     #

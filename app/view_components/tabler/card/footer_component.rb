@@ -40,11 +40,30 @@ module Tabler
   #     <% end %>
   #   <% end %>
   class Card::FooterComponent < BaseComponent
+    # Creates a new card footer component.
+    #
+    # @param options [Hash] additional HTML attributes, including custom CSS classes
+    #
+    # @option options [String, Array<String>] :class custom CSS classes to add to the card footer
+    #
+    # @example Create a basic footer
+    #   Card::FooterComponent.new
+    #
+    # @example Create a footer with custom classes
+    #   Card::FooterComponent.new(class: "text-end bg-light")
+    #
+    # @example Create a footer with multiple classes
+    #   Card::FooterComponent.new(class: ["d-flex", "justify-content-between"])
+    def initialize(**options)
+      @options = options
+      @class_names = Array(options.delete(:class)).join(" ")
+    end
+
     # Renders the card footer wrapper.
     #
     # @return [String] the HTML output for the card footer
     def call
-      content_tag(:div, class: "card-footer") do
+      content_tag(:div, class: "card-footer #{@class_names}") do
         content
       end
     end

@@ -62,14 +62,22 @@ module Tabler
     # Creates a new card content component.
     #
     # @param title [String, nil] optional title for the content section (default: nil)
+    # @param options [Hash] additional HTML attributes, including custom CSS classes
+    #
+    # @option options [String, Array<String>] :class custom CSS classes to add to the card body
     #
     # @example Create content without title
     #   Card::ContentComponent.new
     #
     # @example Create content with title
     #   Card::ContentComponent.new("Section Title")
-    def initialize(title = nil)
+    #
+    # @example Create content with custom classes
+    #   Card::ContentComponent.new("Title", class: "p-4 bg-light")
+    def initialize(title = nil, **options)
       @title = title
+      @options = options
+      @class_names = Array(options.delete(:class)).join(" ")
     end
 
     # Renders the card content section.
@@ -80,7 +88,7 @@ module Tabler
       concat(body) if body?
 
       concat(
-        content_tag(:div, class: "card-body") do
+        content_tag(:div, class: "card-body #{@class_names}") do
           concat(content_tag(:div, title, class: "card-title")) if title.present?
           concat(content) if content.present?
         end

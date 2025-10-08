@@ -45,6 +45,17 @@ module Tabler
   #       <p>Detailed information</p>
   #     <% end %>
   #   <% end %>
+  #
+  # @example Card with table
+  #   <%= render(Tabler::CardComponent.new) do |card| %>
+  #     <% card.with_header("Users") %>
+  #     <% card.with_table do %>
+  #       <table class="table">
+  #         <thead><tr><th>Name</th><th>Email</th></tr></thead>
+  #         <tbody><tr><td>John</td><td>john@example.com</td></tr></tbody>
+  #       </table>
+  #     <% end %>
+  #   <% end %>
   class CardComponent < BaseComponent
     # @!method with_header(title = nil, subtitle: nil, &block)
     #   Adds a header section to the card.
@@ -82,22 +93,61 @@ module Tabler
     #   @return [void]
     renders_many :bodies, "Tabler::Card::ContentComponent"
 
-    # @!method with_footer(&block)
+    # @!method with_footer(**options, &block)
     #   Adds a footer section to the card.
+    #   @param options [Hash] additional options including custom CSS classes
     #   @yield Yields a Tabler::Card::FooterComponent instance
     #   @return [void]
     #   @example
     #     card.with_footer do
     #       <%= link_to "View more", "/more" %>
     #     end
+    #   @example With custom classes
+    #     card.with_footer(class: "text-end") do
+    #       <%= link_to "View more", "/more" %>
+    #     end
     renders_one :footer, "Tabler::Card::FooterComponent"
+
+    # @!method with_table(**options, &block)
+    #   Adds a table section to the card with responsive wrapper.
+    #   @param options [Hash] additional options including custom CSS classes
+    #   @yield Yields a Tabler::Card::TableComponent instance
+    #   @return [void]
+    #   @example
+    #     card.with_table do
+    #       <table class="table"><thead>...</thead><tbody>...</tbody></table>
+    #     end
+    #   @example With custom wrapper class
+    #     card.with_table(class: "table-responsive-md") do
+    #       <table class="table">...</table>
+    #     end
+    renders_one :table, "Tabler::Card::TableComponent"
+
+    # Creates a new card component.
+    #
+    # @param options [Hash] additional HTML attributes, including custom CSS classes
+    #
+    # @option options [String, Array<String>] :class custom CSS classes to add to the card
+    #
+    # @example Create a basic card
+    #   CardComponent.new
+    #
+    # @example Create a card with custom classes
+    #   CardComponent.new(class: "shadow-sm")
+    #
+    # @example Create a card with multiple classes
+    #   CardComponent.new(class: ["card-lg", "mb-4"])
+    def initialize(**options)
+      @class_name = Array(options.delete(:class)).join(" ")
+    end
 
     # Renders the card component.
     #
     # @return [String] the HTML output for the card
     def call
-      content_tag(:div, class: "card") do
+      content_tag(:div, class: "card #{@class_name}") do
         concat(header) if header?
+        concat(table) if table?
         bodies.each do |body|
           concat(body)
         end
