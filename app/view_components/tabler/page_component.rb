@@ -88,6 +88,16 @@ module Tabler
     #     page.with_secondary_action("Settings", url: "/settings", icon: "settings")
     renders_one :secondary_action, "Tabler::Page::SecondaryButtonComponent"
 
+    # @!method with_body(&block)
+    #   Adds the main body/content area to the page.
+    #   @yield Yields a Tabler::Page::BodyComponent instance to wrap the page content
+    #   @return [void]
+    #   @example
+    #     page.with_body do
+    #       # Your page content here
+    #     end
+    renders_one :body, "Tabler::Page::BodyComponent"
+
     # Creates a new page component.
     #
     # @param title [String, nil] the page title to display in the page header (default: nil)
@@ -101,9 +111,16 @@ module Tabler
     #
     # @example Create a page without title
     #   PageComponent.new
+    #
     def initialize(title = nil, subtitle: nil)
       @title = title
       @subtitle = subtitle
+    end
+
+    private
+
+    def page_header?
+      @title.present? || primary_action? || secondary_action?
     end
   end
 end
