@@ -9,3 +9,4 @@
 storage
 tmp
 .DS_Store
+.yardoc
