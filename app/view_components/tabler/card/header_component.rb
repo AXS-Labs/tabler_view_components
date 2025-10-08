@@ -48,7 +48,7 @@ module Tabler
     #   Adds multiple action buttons to the card header.
     #   @yield [action] Yields a Tabler::ButtonComponent instance for each action
     #   @return [void]
-    renders_many :actions, "Tabler::ButtonComponent"
+    renders_many :actions, "Tabler::Card::ActionButtonComponent"
 
     # Creates a new card header component.
     #

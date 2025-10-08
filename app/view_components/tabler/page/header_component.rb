@@ -40,6 +40,20 @@ module Tabler
     #     header.with_secondary_action("Export", url: "/items/export", icon: "download")
     renders_one :secondary_action, "Tabler::Page::SecondaryButtonComponent"
 
+    # @!method with_headline_action(label, url: '#', icon: 'arrow-left', **options)
+    #   Adds a headline navigation button to the header.
+    #   This button appears in the headline area, typically used for back navigation.
+    #   @param label [String] the button text
+    #   @param url [String] the button URL
+    #   @param icon [String] the Tabler icon name (default: 'arrow-left')
+    #   @param options [Hash] additional button options
+    #   @return [void]
+    #   @example
+    #     header.with_headline_action("Back to List", url: "/projects")
+    #   @example With custom icon
+    #     header.with_headline_action("Dashboard", url: "/", icon: "home")
+    renders_one :headline_action, "Tabler::Page::HeadlineButtonComponent"
+
     alias_method :with_primary_button, :with_primary_action
 
     # Creates a new page header component.
@@ -66,8 +80,9 @@ module Tabler
           content_tag(:div, class: "row g-2 align-items-center") do
             concat(
               content_tag(:div, class: "col") do
-                concat(content_tag(:div, @title, class: "page-pretitle")) if @title.present?
-                concat(content_tag(:h2, @subtitle, class: "page-title")) if @subtitle.present?
+                concat(headline_action) if headline_action?
+                concat(content_tag(:div, @subtitle, class: "page-pretitle")) if @subtitle.present?
+                concat(content_tag(:div, @title, class: "page-title")) if @title.present?
               end
             )
 

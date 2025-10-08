@@ -73,7 +73,7 @@ module Tabler
       @options[:class] = classes
 
       link_to @url, @options do
-        concat(render(Tabler::IconComponent.new(@icon, stroke_width: 2, size: 20))) if @icon
+        concat(icon_tag) if @icon
         concat(@label)
       end
     end
@@ -82,8 +82,9 @@ module Tabler
 
     # Builds the CSS classes for the button.
     #
-    # Combines the base button class with color, size, and icon-only variants,
-    # along with any custom classes provided via options.
+    # Combines the base button class with color, size, icon-only, and full-width variants,
+    # along with any custom classes provided via options. This method can be overridden
+    # in subclasses to provide specialized button styling.
     #
     # @return [String] the compiled CSS class string
     def classes
@@ -94,6 +95,17 @@ module Tabler
       classes << "w-100" if @full_width
 
       [ @options[:class], *classes ].compact.join(" ")
+    end
+
+    # Renders the icon tag for the button.
+    #
+    # Adds appropriate spacing (margin-end) when the button has both an icon and a label.
+    # For icon-only buttons, no margin is added.
+    #
+    # @return [String] the HTML output for the icon
+    def icon_tag
+      icon_class = @label.present? ? "me-2" : nil
+      render(IconComponent.new(@icon, size: 20, class: icon_class))
     end
   end
 end
