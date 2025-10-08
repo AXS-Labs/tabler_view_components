@@ -23,16 +23,20 @@ module Tabler
   #
   # @example Button with custom HTML attributes
   #   <%= render(Tabler::ButtonComponent.new("Submit", url: "/submit", data: { turbo_method: :post })) %>
+  #
+  # @example Full-width button
+  #   <%= render(Tabler::ButtonComponent.new("Full Width", url: "/action", full_width: true)) %>
   class ButtonComponent < BaseComponent
     # Creates a new button component.
     #
     # @param label [String] the text to display on the button (can be empty for icon-only buttons)
     # @param url [String] the URL the button links to (default: '#')
     # @param color [String] the Tabler color variant (default: 'primary')
-    #   Available colors: primary, secondary, success, warning, danger, info, light, dark
+    #   Available colors: primary, secondary, success, warning, danger, info, light, dark, or empty string for ghost button
     # @param size [String, nil] the button size (default: nil for standard size)
     #   Available sizes: 'sm' (small), 'lg' (large)
     # @param icon [String, nil] the name of the Tabler icon to display (default: nil)
+    # @param full_width [Boolean] whether the button should span the full width of its container (default: false)
     # @param options [Hash] additional HTML attributes to pass to the link element
     #
     # @example Create a primary button
@@ -46,12 +50,19 @@ module Tabler
     #
     # @example Create a small button with custom class
     #   ButtonComponent.new("Compact", url: "#", size: "sm", class: "my-custom-class")
-    def initialize(label, url: "#", color: "primary", size: nil, icon: nil, **options)
+    #
+    # @example Create a full-width button
+    #   ButtonComponent.new("Submit", url: "/submit", full_width: true)
+    #
+    # @example Create a ghost/neutral button
+    #   ButtonComponent.new("Cancel", url: "/back", color: "")
+    def initialize(label, url: "#", color: "primary", size: nil, icon: nil, full_width: false, **options)
       @label = label
       @url = url
       @color = color
       @size = size
       @icon = icon
+      @full_width = full_width
       @options = options
     end
 
@@ -80,6 +91,7 @@ module Tabler
       classes << "btn-#{@color}" if @color.present?
       classes << "btn-#{@size}" if @size
       classes << "btn-icon" if @icon && @label.blank?
+      classes << "w-100" if @full_width
 
       [ @options[:class], *classes ].compact.join(" ")
     end
