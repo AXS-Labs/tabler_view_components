@@ -123,6 +123,8 @@ module Tabler
     #     end
     renders_one :table, "Tabler::Card::TableComponent"
 
+    renders_one :status, "Tabler::Card::StatusComponent"
+
     # Creates a new card component.
     #
     # @param options [Hash] additional HTML attributes, including custom CSS classes
@@ -146,6 +148,7 @@ module Tabler
     # @return [String] the HTML output for the card
     def call
       content_tag(:div, class: "card #{@class_name}") do
+        concat(status) if status?
         concat(header) if header?
         concat(table) if table?
         bodies.each do |body|

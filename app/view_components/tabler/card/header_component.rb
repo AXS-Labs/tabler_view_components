@@ -70,8 +70,12 @@ module Tabler
     # @return [String] the HTML output for the card header
     def call
       content_tag(:div, class: "card-header") do
-        concat(content_tag(:div, title, class: "card-title")) if title.present?
-        concat(content_tag(:div, subtitle, class: "card-subtitle")) if subtitle.present?
+        concat(
+          content_tag(:div, class: "card-title") do
+            concat(title) if title.present?
+            concat(content_tag(:span, subtitle, class: "card-subtitle")) if subtitle.present?
+          end
+        ) if title.present? || subtitle.present?
 
         concat(content_tag(:div, class: "card-actions") do
           actions.each do |action|
